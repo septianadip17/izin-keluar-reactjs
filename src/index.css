@@ -1,5 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@tailwind base; @tailwind components; @tailwind utilities;
-body{
-  background-color: #242424;
+/* ===== THEME GRADIENT ===== */
+
+body {
+  @apply transition-colors duration-500;
+}
+
+/* Light */
+body[data-theme="light"] {
+  background: linear-gradient(135deg, #ffffff, #f1f5f9);
+  color: #0f172a;
+}
+
+/* Bright */
+body[data-theme="bright"] {
+  background: linear-gradient(135deg, #fef9c3, #fde68a);
+  color: #78350f;
+}
+
+/* Cyber Punk */
+body[data-theme="cyber"] {
+  background: linear-gradient(135deg, #020617, #0f172a, #020617);
+  color: #22d3ee;
 }

@@ -49,7 +49,7 @@ export default function SelectView({
 
           <button
             onClick={onSubmit}
-            className="   w-full p-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold hover:opacity-90 transition"
+            className="w-full p-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold hover:opacity-90 transition"
           >
             Submit
           </button>

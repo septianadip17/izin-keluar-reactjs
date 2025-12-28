@@ -3,6 +3,8 @@ import SelectView from "./components/SelectView";
 import StatusView from "./components/StatusView";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import { useTheme } from "./hooks/useTheme";
+import { useFullscreen } from "./hooks/useFullscreen";
+import FullscreenButton from "./components/FullscreenButton";
 
 export default function App() {
   // View control
@@ -21,7 +23,6 @@ export default function App() {
     if (!phone) return alert("Nomor HP wajib diisi");
     if (selectedStatus.key === "custom" && !customText)
       return alert("Custom status belum diisi");
-
     setView("status");
   };
 
@@ -31,6 +32,8 @@ export default function App() {
     setCustomText("");
     setPhone("");
   };
+
+  const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
 
   return (
     <div className="min-h-screen w-screen flex items-center justify-center">
@@ -55,6 +58,12 @@ export default function App() {
           onReset={resetStatus}
         />
       )}
+
+      <FullscreenButton
+        isFullscreen={isFullscreen}
+        enterFullscreen={enterFullscreen}
+        exitFullscreen={exitFullscreen}
+      />
     </div>
   );
 }

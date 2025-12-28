@@ -25,7 +25,6 @@ export default function SelectView({
         ))}
       </div>
 
-      {/* Input muncul berdasarkan state */}
       {selectedStatus && (
         <div className="space-y-3">
           {selectedStatus.key === "custom" && (

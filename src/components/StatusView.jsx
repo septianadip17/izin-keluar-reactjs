@@ -44,7 +44,7 @@ export default function StatusView({ status, customText, phone, onReset }) {
         onClick={onReset}
         className="mt-8 px-8 py-3 rounded-full border font-medium hover:bg-black/10 transition"
       >
-        Ganti Status
+        🔄
       </button>
     </div>
   );

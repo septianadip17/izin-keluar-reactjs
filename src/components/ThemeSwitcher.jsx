@@ -1,26 +1,36 @@
-import PropTypes from 'prop-types';
-
 export default function ThemeSwitcher({ theme, setTheme }) {
-  const themes = ["light", "bright", "cyber"];
+  const themes = [
+    {
+      key: "light",
+      color: "bg-white",
+    },
+    {
+      key: "bright",
+      color: "bg-yellow-300",
+    },
+    {
+      key: "cyber",
+      color: "bg-cyan-400",
+    },
+  ];
 
   return (
-    <div className="absolute top-4 right-4 flex gap-2">
+    <div className="fixed top-4 right-4 flex gap-3 z-50">
       {themes.map((t) => (
         <button
-          key={t}
-          onClick={() => setTheme(t)}
-          className={`px-3 py-1 border rounded ${
-            theme === t ? "font-bold" : ""
-          }`}
-        >
-          {t}
-        </button>
+          key={t.key}
+          onClick={() => setTheme(t.key)}
+          title={t.key}
+          className={`
+            w-5 h-5 rounded-full
+            ${t.color}
+            border
+            ${theme === t.key ? "ring-2 ring-black" : ""}
+            hover:scale-125
+            transition
+          `}
+        />
       ))}
     </div>
   );
 }
-
-ThemeSwitcher.propTypes = {
-  theme: PropTypes.string.isRequired,
-  setTheme: PropTypes.func.isRequired,
-};

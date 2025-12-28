@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectView from "./components/SelectView";
 import StatusView from "./components/StatusView";
 import ThemeSwitcher from "./components/ThemeSwitcher";
+import FullscreenButton from "./components/FullscreenButton";
 import { useTheme } from "./hooks/useTheme";
 import { useFullscreen } from "./hooks/useFullscreen";
-import FullscreenButton from "./components/FullscreenButton";
 
+/*
+  App:
+  - Pusat state
+  - Kontrol view
+  - Kontrol fullscreen
+*/
 export default function App() {
   // View control
   const [view, setView] = useState("select");
@@ -18,26 +24,46 @@ export default function App() {
   // Theme
   const { theme, setTheme } = useTheme();
 
-  // handler submit status
+  // Fullscreen
+  const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
+
+  /*
+    Auto fullscreen saat masuk Status View
+  */
+  useEffect(() => {
+    if (view === "status") {
+      enterFullscreen();
+    }
+  }, [view]);
+
+  /*
+    Handler submit
+  */
   const handleSubmit = () => {
-    if (!phone) return alert("Nomor HP wajib diisi");
+    if (!phone) return alert("Nomor WhatsApp wajib diisi");
     if (selectedStatus.key === "custom" && !customText)
       return alert("Custom status belum diisi");
+
     setView("status");
   };
 
+  /*
+    Reset semua state
+  */
   const resetStatus = () => {
     setView("select");
     setSelectedStatus(null);
     setCustomText("");
     setPhone("");
+    exitFullscreen();
   };
 
-  const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
-
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center">
+    <div className="min-h-screen w-screen flex items-center justify-center p-6">
+      {/* THEME SWITCHER */}
       <ThemeSwitcher theme={theme} setTheme={setTheme} />
+
+      {/* VIEW CONTROL */}
       {view === "select" && (
         <SelectView
           selectedStatus={selectedStatus}
@@ -59,6 +85,7 @@ export default function App() {
         />
       )}
 
+      {/* FULLSCREEN HELPER */}
       <FullscreenButton
         isFullscreen={isFullscreen}
         enterFullscreen={enterFullscreen}

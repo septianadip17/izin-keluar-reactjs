@@ -11,7 +11,7 @@ export default function SelectView({
   onSubmit,
 }) {
   return (
-    <div className="w-full max-w-md rounded-2xl bg-white/70 dark:bg-white/10 backdrop-blur shadow-xl p-6 space-y-5">
+    <div className="w-full max-w-screen-xl rounded-2xl bg-white/70 dark:bg-white/10 backdrop-blur shadow-xl p-6 space-y-5">
       <h1 className="text-3xl font-bold mb-4">Status Meja</h1>
       <div className="grid grid-cols-2 gap-3">
         {STATUS_LIST.map((status) => (
@@ -40,7 +40,7 @@ export default function SelectView({
 
           <input
             type="text"
-            placeholder="Nomor WhatsApp"
+            placeholder="Masukkan Nomor WA, Contoh 6289696135242."
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && onSubmit()}

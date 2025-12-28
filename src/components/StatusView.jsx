@@ -1,7 +1,9 @@
-/* eslint-disable react/prop-types */
+import { getWhatsappLink } from "../utils/whatsapp";
 
 export default function StatusView({ status, customText, phone, onReset }) {
   const title = status.key === "custom" ? customText : status.label;
+  const waLink = getWhatsappLink(phone);
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${waLink}`;
 
   return (
     <div className="flex flex-col items-center justify-center text-center space-y-8 animate-fade-in">
@@ -23,7 +25,8 @@ export default function StatusView({ status, customText, phone, onReset }) {
 
       <button
         onClick={onReset}
-        className="px-8 py-3 rounded-full border font-medium hover:bg-black/10 transition">
+        className="px-8 py-3 rounded-full border font-medium hover:bg-black/10 transition"
+      >
         Ganti Status
       </button>
     </div>

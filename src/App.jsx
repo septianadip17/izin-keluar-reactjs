@@ -34,7 +34,7 @@ export default function App() {
     if (view === "status") {
       enterFullscreen();
     }
-  }, [view]);
+  }, [enterFullscreen, view]);
 
   /*
     Handler submit

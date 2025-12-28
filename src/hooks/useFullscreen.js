@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
 
-/*
-  Hook untuk:
-  - Masuk fullscreen
-  - Keluar fullscreen
-  - Deteksi status fullscreen
-*/
 export function useFullscreen() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 

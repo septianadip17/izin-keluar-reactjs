@@ -1,9 +1,6 @@
 /* eslint-disable react/prop-types */
 import { STATUS_LIST } from "../data/statusList";
 
-/*
-  View untuk memilih status
-*/
 export default function SelectView({
   selectedStatus,
   onSelectStatus,

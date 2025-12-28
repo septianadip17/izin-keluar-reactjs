@@ -32,8 +32,8 @@ export default function StatusView({ status, customText, phone, onReset }) {
           Jika urgent, silakan scan QR WhatsApp
         </p>
 
-        <div className="p-5 rounded-2xl bg-white shadow-2xl hover:scale-105 transition-transform">
-          <img src={qrUrl} alt="QR WhatsApp" className="w-64 h-64" />
+        <div className="p-5 rounded-3xl bg-white shadow-2xl hover:scale-105 transition-transform">
+          <img src={qrUrl} alt="QR WhatsApp" className="w-32 h-32" />
         </div>
 
         <p className="text-sm opacity-60">Scan untuk langsung chat WhatsApp</p>

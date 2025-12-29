@@ -1,11 +1,5 @@
 import { getWhatsappLink } from "../utils/whatsapp";
 
-/*
-  StatusView
-  - Tampilan status utama (fullscreen)
-  - Fokus 1 card besar (glassmorphism)
-  - Menampilkan icon, judul, deskripsi, QR WhatsApp
-*/
 export default function StatusView({ status, customText, phone, onReset }) {
   const title = status.key === "custom" ? customText : status.label;
 
@@ -28,7 +22,7 @@ export default function StatusView({ status, customText, phone, onReset }) {
 
         {/* DESCRIPTION */}
         <p className="text-lg opacity-80 mb-10">
-          {status.desc || "Sedang melakukan aktivitas"}
+          {status.desc || "izin keluar sebentar"}
         </p>
 
         {/* QR SECTION */}

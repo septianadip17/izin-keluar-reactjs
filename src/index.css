@@ -223,3 +223,33 @@ body[data-theme="cyber"] {
     animation: none;
   }
 }
+
+
+.animated-bg {
+  position: fixed;
+  inset: -50%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,255,255,0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(139,92,246,0.15), transparent 40%);
+  animation: bgMove 20s linear infinite;
+  z-index: -2;
+}
+
+@keyframes bgMove {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(10%, 10%); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 12s linear infinite;
+}

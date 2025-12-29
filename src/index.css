@@ -3,16 +3,146 @@
 @tailwind utilities;
 
 /* =====================
-   BACKGROUND THEME
+   BASE & ROOT
    ===================== */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
 
 body {
   min-height: 100vh;
   transition: background 0.6s ease;
+  overflow: hidden;
+  /* fullscreen display */
 }
+
+/* Root container React */
+#root {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* =====================
+   NOISE OVERLAY (ANTI-BANDING)
+   ===================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/noise.png");
+  background-repeat: repeat;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =====================
+   AUTO-HIDE UI CONTROLS
+   ===================== */
+
+.control-bar {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+body.show-ui .control-bar {
+  opacity: 1;
+}
+
+/* =====================
+   CLOCK (AMBIENT)
+   ===================== */
+
+.clock {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  opacity: 0.6;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* =====================
+   GLASS CARD
+   ===================== */
+
+.card {
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 0.5px rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+}
+
+/* Fallback jika backdrop-filter tidak didukung */
+@supports not (backdrop-filter: blur(10px)) {
+  .card {
+    background: rgba(30, 41, 59, 0.85);
+  }
+}
+
+/* =====================
+   QR CODE CONTAINER
+   ===================== */
+
+.qr-wrapper {
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* =====================
+   STATUS ICON (AMBIENT GLOW)
+   ===================== */
+
+.status-icon {
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(96, 165, 250, 0.7);
+  }
+}
+
+/* =====================
+   THEME BUTTON
+   ===================== */
+
+.theme-btn {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.theme-btn:hover {
+  box-shadow: 0 0 20px var(--accent);
+  transform: scale(1.05);
+}
+
+/* =====================
+   THEMES
+   ===================== */
 
 /* LIGHT */
 body[data-theme="light"] {
+  --accent: #2563eb;
   background:
     radial-gradient(circle at top, #ffffff, transparent 60%),
     linear-gradient(135deg, #f1f5f9, #e2e8f0);
@@ -21,6 +151,7 @@ body[data-theme="light"] {
 
 /* BRIGHT */
 body[data-theme="bright"] {
+  --accent: #facc15;
   background:
     radial-gradient(circle at top, #fef9c3, transparent 60%),
     linear-gradient(135deg, #fde68a, #facc15);
@@ -29,15 +160,15 @@ body[data-theme="bright"] {
 
 /* CYBER */
 body[data-theme="cyber"] {
+  --accent: #22d3ee;
   background:
     radial-gradient(circle at center, rgba(34, 211, 238, 0.12), transparent 60%),
     linear-gradient(135deg, #020617, #0f172a, #020617);
   color: #e0f2fe;
 }
 
-
 /* =====================
-   ANIMATION
+   ANIMATIONS
    ===================== */
 
 @keyframes glassIn {
@@ -70,4 +201,17 @@ body[data-theme="cyber"] {
 
 .animate-breathe {
   animation: breathe 4s ease-in-out infinite;
+}
+
+/* =====================
+   ACCESSIBILITY
+   ===================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-breathe,
+  .status-icon,
+  .animate-glass-in {
+    animation: none;
+  }
 }

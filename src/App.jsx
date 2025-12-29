@@ -18,7 +18,7 @@ export default function App() {
   /* =====================
      VIEW STATE
      ===================== */
-  const [view, setView] = useState("select"); // "select" | "status"
+  const [view, setView] = useState("select");
 
   /* =====================
      STATUS STATE
@@ -33,44 +33,28 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   /* =====================
-     THEME
+     THEME & FULLSCREEN
      ===================== */
   const { theme, setTheme } = useTheme();
-
-  /* =====================
-     FULLSCREEN
-     ===================== */
   const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
 
   /* =====================
-     SIDE EFFECTS
+     EFFECTS
      ===================== */
-
-  // Auto fullscreen saat masuk Status View
   useEffect(() => {
-    if (view === "status") {
-      enterFullscreen();
-    }
+    if (view === "status") enterFullscreen();
   }, [view, enterFullscreen]);
 
   /* =====================
      HANDLERS
      ===================== */
-
   const handleSubmit = () => {
-    if (!phone) {
-      alert("Nomor WhatsApp wajib diisi");
-      return;
-    }
-
-    if (selectedStatus?.key === "custom" && !customText) {
-      alert("Custom status belum diisi");
-      return;
-    }
+    if (!phone) return alert("Nomor WhatsApp wajib diisi");
+    if (selectedStatus?.key === "custom" && !customText)
+      return alert("Custom status belum diisi");
 
     setIsSubmitting(true);
 
-    // UX loading animation
     setTimeout(() => {
       setIsSubmitting(false);
       setView("status");
@@ -88,16 +72,21 @@ export default function App() {
   /* =====================
      RENDER
      ===================== */
-
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center p-6 relative overflow-hidden">
-      {/* CLOCK (ambient) */}
+    <div className="min-h-screen w-screen relative overflow-hidden flex items-center justify-center p-6">
+      {/* BACKGROUND ANIMATION */}
+      <div className="animated-bg" />
+
+      {/* CLOCK */}
       <Clock />
 
-      {/* THEME SWITCHER */}
+      {/* THEME */}
       <ThemeSwitcher theme={theme} setTheme={setTheme} />
 
-      {/* VIEW: SELECT */}
+      {/* LOADING */}
+      {isSubmitting && <LoadingOverlay />}
+
+      {/* VIEW */}
       {view === "select" && (
         <SelectView
           selectedStatus={selectedStatus}
@@ -107,11 +96,9 @@ export default function App() {
           phone={phone}
           setPhone={setPhone}
           onSubmit={handleSubmit}
-          isSubmitting={isSubmitting}
         />
       )}
 
-      {/* VIEW: STATUS */}
       {view === "status" && selectedStatus && (
         <StatusView
           status={selectedStatus}
@@ -121,15 +108,12 @@ export default function App() {
         />
       )}
 
-      {/* FULLSCREEN HELPER */}
+      {/* FULLSCREEN */}
       <FullscreenButton
         isFullscreen={isFullscreen}
         enterFullscreen={enterFullscreen}
         exitFullscreen={exitFullscreen}
       />
-
-      {/* LOADING OVERLAY */}
-      {isSubmitting && <LoadingOverlay />}
     </div>
   );
 }

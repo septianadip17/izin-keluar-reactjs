@@ -64,14 +64,18 @@ body.show-ui .control-bar {
   position: fixed;
   top: 24px;
   left: 32px;
-  font-size: 14px;
-  letter-spacing: 0.15em;
-  opacity: 0.6;
-  -webkit-user-select: none;
-  user-select: none;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  text-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
-  z-index: 5;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  opacity: 0.4;
+  transition: opacity 0.4s ease;
+  --webkit-backdrop-filter: blur(10px);
+  z-index: 30;
+}
+
+.clock:hover {
+  opacity: 1;
 }
 
 /* =====================

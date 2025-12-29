@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 
-/*
-  Clock
-  - Jam digital 24 jam
-  - Update tiap 1 detik
-  - Untuk ambient display (pojok layar)
-*/
 export default function Clock() {
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState("");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
+    const update = () =>
+      setTime(
+        new Date().toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        })
+      );
 
-    return () => clearInterval(interval);
+    update();
+    const i = setInterval(update, 1000);
+    return () => clearInterval(i);
   }, []);
 
-  const formattedTime = time.toLocaleTimeString("id-ID", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-
-  return <div className="clock">{formattedTime}</div>;
+  return <div className="clock glass">{time}</div>;
 }

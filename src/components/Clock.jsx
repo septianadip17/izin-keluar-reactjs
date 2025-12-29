@@ -21,21 +21,7 @@ export default function Clock() {
   return (
     <div className="control-bar fixed top-6 left-6 z-30 select-none">
       <div
-        className="
-          px-4 py-2
-          rounded-full
-          backdrop-blur-xl
-          bg-white/10
-          border border-white/20
-          shadow-md
-          text-xs
-          tracking-[0.35em]
-          font-mono
-          opacity-50
-          hover:opacity-100
-          transition
-        "
-      >
+        className="px-4 py-2 rounded-full backdrop-blur-xl bg-white/30 border border-white/20 shadow-md text-xs tracking-[0.35em] font-mono opacity-50 hover:opacity-100 transition">
         {time}
       </div>
     </div>

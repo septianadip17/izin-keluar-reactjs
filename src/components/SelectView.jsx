@@ -14,7 +14,7 @@ export default function SelectView({
     <div className="card w-full max-w-4xl p-8 space-y-6 animate-glass-in">
       {/* TITLE */}
       <h1 className="text-4xl font-extrabold tracking-wide text-center">
-        Status Meja
+        Izin Sebentar
       </h1>
 
       {/* STATUS BUTTONS */}
@@ -52,7 +52,15 @@ export default function SelectView({
               value={customText}
               onChange={(e) => setCustomText(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && onSubmit()}
-              className="w-full p-4 rounded-xl bg-white/10 backdrop-blur border border-white/30 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+              className="
+          glass-input
+          w-full
+          p-4
+          rounded-xl
+          focus:outline-none
+          focus:ring-2
+          focus:ring-[var(--accent)]
+        "
             />
           )}
 
@@ -63,16 +71,41 @@ export default function SelectView({
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && onSubmit()}
-            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur border border-white/30  placeholder:text-white/70 placeholder:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            className="
+        glass-input
+        w-full
+        p-4
+        rounded-xl
+        focus:outline-none
+        focus:ring-2
+        focus:ring-[var(--accent)]
+      "
           />
 
           {/* SUBMIT */}
           <button
             onClick={onSubmit}
             disabled={isSubmitting}
-            className="w-full py-4 rounded-xl font-semibold tracking-wide bg-[var(--accent)] text-black hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="
+        relative
+        w-full
+        py-4
+        rounded-xl
+        font-semibold
+        tracking-wide
+        bg-[var(--accent)]
+        text-black
+        transition
+        overflow-hidden
+        disabled:opacity-60
+        disabled:cursor-not-allowed
+      "
           >
-            {isSubmitting ? "Memproses..." : "Tampilkan Status"}
+            {isSubmitting ? (
+              <span className="animate-pulse">Menyiapkan tampilan…</span>
+            ) : (
+              "Tampilkan Status"
+            )}
           </button>
         </div>
       )}

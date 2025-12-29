@@ -229,22 +229,31 @@ body[data-theme="cyber"] {
   position: fixed;
   inset: -50%;
   background:
-    radial-gradient(circle at 20% 20%, rgba(0,255,255,0.15), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(139,92,246,0.15), transparent 40%);
+    radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15), transparent 40%);
   animation: bgMove 20s linear infinite;
   z-index: -2;
 }
 
 @keyframes bgMove {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(10%, 10%); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(10%, 10%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 @keyframes marquee {
   0% {
     transform: translateX(100%);
   }
+
   100% {
     transform: translateX(-100%);
   }
@@ -252,4 +261,33 @@ body[data-theme="cyber"] {
 
 .animate-marquee {
   animation: marquee 12s linear infinite;
+}
+
+/* =====================
+   FORM INPUT GLOBAL
+   ===================== */
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.12);
+  --webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: inherit;
+}
+
+.glass-input::placeholder {
+  color: currentColor;
+  opacity: 0.55;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* CYBER: lebih terang */
+body[data-theme="cyber"] .glass-input {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* LIGHT & BRIGHT: teks lebih gelap */
+body[data-theme="light"] .glass-input,
+body[data-theme="bright"] .glass-input {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.15);
 }

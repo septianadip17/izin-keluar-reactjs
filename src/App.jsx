@@ -52,12 +52,15 @@ export default function App() {
     if (!phone) return alert("Nomor WhatsApp wajib diisi");
     if (selectedStatus?.key === "custom" && !customText)
       return alert("Custom status belum diisi");
-
+    // button feedback
     setIsSubmitting(true);
-
+    // delay kecil
+    setTimeout(() => {
+      setView("status");
+    }, 500);
+    // loading overlay
     setTimeout(() => {
       setIsSubmitting(false);
-      setView("status");
     }, 1200);
   };
 

@@ -13,6 +13,8 @@ import LoadingOverlay from "./components/LoadingOverlay";
 /* Hooks */
 import { useTheme } from "./hooks/useTheme";
 import { useFullscreen } from "./hooks/useFullscreen";
+import { useAutoHideUI } from "./hooks/useAutoHideUI";
+
 
 const VIEW = {
   SELECT: "select",
@@ -36,6 +38,7 @@ export default function App() {
      UI STATE
      ===================== */
   const [isSubmitting, setIsSubmitting] = useState(false);
+  useAutoHideUI();
 
   /* =====================
      THEME & FULLSCREEN

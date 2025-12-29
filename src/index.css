@@ -133,3 +133,45 @@ body[data-theme="cyber"] {
     transition: none !important;
   }
 }
+
+/* =====================
+   FORM INPUT (GLASS)
+   ===================== */
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.14);
+  --webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: currentColor;
+}
+
+/* placeholder default */
+.glass-input::placeholder {
+  color: currentColor;
+  opacity: 0.6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* =====================
+   THEME OVERRIDES
+   ===================== */
+
+/* CYBER: teks & placeholder lebih terang */
+body[data-theme="cyber"] .glass-input {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(34, 211, 238, 0.45);
+  color: #e0f2fe;
+}
+
+body[data-theme="cyber"] .glass-input::placeholder {
+  color: #67e8f9;
+  opacity: 0.8;
+}
+
+/* LIGHT & BRIGHT: teks gelap */
+body[data-theme="light"] .glass-input,
+body[data-theme="bright"] .glass-input {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #0f172a;
+}

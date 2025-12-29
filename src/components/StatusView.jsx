@@ -1,76 +1,57 @@
 import { getWhatsappLink } from "../utils/whatsapp";
 
+/*
+  StatusView
+  - Tampilan status utama (fullscreen)
+  - Fokus 1 card besar (glassmorphism)
+  - Menampilkan icon, judul, deskripsi, QR WhatsApp
+*/
 export default function StatusView({ status, customText, phone, onReset }) {
   const title = status.key === "custom" ? customText : status.label;
 
   const waLink = getWhatsappLink(phone);
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${waLink}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(
+    waLink
+  )}`;
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      {/* GLASS CARD */}
-      <div
-        className="
-          relative
-          w-full max-w-2xl
-          rounded-3xl
-          p-10
-          text-center
-          backdrop-blur-xl
-          bg-white/20
-          border border-white/30
-          shadow-[0_0_60px_rgba(0,255,255,0.08)]
-          animate-glass-in
-        "
-      >
+      {/* MAIN GLASS CARD */}
+      <div className="card w-full max-w-3xl p-12 text-center animate-glass-in">
         {/* STATUS ICON */}
-        <div
-          className="
-            text-[120px]
-            mb-4
-            drop-shadow-[0_0_25px_rgba(0,255,255,0.35)]
-            animate-breathe
-          "
-        >
+        <div className="status-icon text-[120px] mb-6 animate-breathe">
           {status.icon}
         </div>
 
         {/* TITLE */}
-        <h1 className="text-5xl font-extrabold tracking-wide mb-2">{title}</h1>
+        <h1 className="text-5xl font-extrabold tracking-wide mb-3">{title}</h1>
 
         {/* DESCRIPTION */}
-        <p className="text-lg opacity-80 mb-8">
+        <p className="text-lg opacity-80 mb-10">
           {status.desc || "Sedang melakukan aktivitas"}
         </p>
 
         {/* QR SECTION */}
-        <div className="flex flex-col items-center gap-4">
-          <p className="text-sm uppercase tracking-widest opacity-70">
+        <div className="flex flex-col items-center gap-4 mb-10">
+          <p className="text-xs uppercase tracking-widest opacity-70">
             Scan untuk WhatsApp
           </p>
 
-          <div
-            className="
-              p-4
-              rounded-2xl
-              bg-white/80
-              backdrop-blur
-              shadow-xl
-              border border-white/50
-              hover:scale-105
-              transition
-            "
-          >
-            <img src={qrUrl} alt="QR WhatsApp" className="w-56 h-56" />
+          <div className="qr-wrapper hover:scale-105 transition-transform">
+            <img
+              src={qrUrl}
+              alt="QR WhatsApp"
+              className="w-56 h-56"
+              draggable={false}
+            />
           </div>
         </div>
 
-        {/* RESET */}
+        {/* RESET BUTTON */}
         <button
           onClick={onReset}
           className="
-            mt-10
-            px-8 py-3
+            px-10 py-3
             rounded-full
             border border-white/40
             backdrop-blur

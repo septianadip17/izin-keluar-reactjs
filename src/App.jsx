@@ -8,17 +8,12 @@ import StatusView from "./components/StatusView";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import FullscreenButton from "./components/FullscreenButton";
 import Clock from "./components/Clock";
+import LoadingOverlay from "./components/LoadingOverlay";
 
 /* Hooks */
 import { useTheme } from "./hooks/useTheme";
 import { useFullscreen } from "./hooks/useFullscreen";
 
-/*
-  App
-  - Mengontrol view (select / status)
-  - Menyimpan state status
-  - Mengatur theme & fullscreen
-*/
 export default function App() {
   /* =====================
      VIEW STATE
@@ -31,6 +26,11 @@ export default function App() {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [customText, setCustomText] = useState("");
   const [phone, setPhone] = useState("");
+
+  /* =====================
+     UI STATE
+     ===================== */
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   /* =====================
      THEME
@@ -68,7 +68,13 @@ export default function App() {
       return;
     }
 
-    setView("status");
+    setIsSubmitting(true);
+
+    // UX loading animation
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setView("status");
+    }, 1200);
   };
 
   const handleReset = () => {
@@ -84,7 +90,7 @@ export default function App() {
      ===================== */
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center p-6 relative">
+    <div className="min-h-screen w-screen flex items-center justify-center p-6 relative overflow-hidden">
       {/* CLOCK (ambient) */}
       <Clock />
 
@@ -101,6 +107,7 @@ export default function App() {
           phone={phone}
           setPhone={setPhone}
           onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
         />
       )}
 
@@ -120,6 +127,9 @@ export default function App() {
         enterFullscreen={enterFullscreen}
         exitFullscreen={exitFullscreen}
       />
+
+      {/* LOADING OVERLAY */}
+      {isSubmitting && <LoadingOverlay />}
     </div>
   );
 }

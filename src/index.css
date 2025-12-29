@@ -49,6 +49,7 @@ body::before {
 .control-bar {
   opacity: 0;
   transition: opacity 0.4s ease;
+  z-index: 20;
 }
 
 body.show-ui .control-bar {
@@ -62,7 +63,7 @@ body.show-ui .control-bar {
 .clock {
   position: fixed;
   top: 24px;
-  right: 32px;
+  left: 32px;
   font-size: 14px;
   letter-spacing: 0.15em;
   opacity: 0.6;
@@ -70,6 +71,7 @@ body.show-ui .control-bar {
   user-select: none;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   text-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
+  z-index: 5;
 }
 
 /* =====================

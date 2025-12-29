@@ -8,6 +8,7 @@ export default function SelectView({
   phone,
   setPhone,
   onSubmit,
+  isSubmitting,
 }) {
   return (
     <div className="card w-full max-w-4xl p-8 space-y-6 animate-glass-in">
@@ -62,15 +63,16 @@ export default function SelectView({
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && onSubmit()}
-            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur border border-white/30 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur border border-white/30  placeholder:text-white/70 placeholder:drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
 
           {/* SUBMIT */}
           <button
             onClick={onSubmit}
-            className="w-full py-4 rounded-xl font-semibold tracking-wide bg-[var(--accent)] text-black hover:opacity-90 transition"
+            disabled={isSubmitting}
+            className="w-full py-4 rounded-xl font-semibold tracking-wide bg-[var(--accent)] text-black hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Tampilkan Status
+            {isSubmitting ? "Memproses..." : "Tampilkan Status"}
           </button>
         </div>
       )}

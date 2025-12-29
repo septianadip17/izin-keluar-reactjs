@@ -19,35 +19,26 @@ export default function StatusView({ status, customText, phone, onReset }) {
   }, [onReset]);
 
   useEffect(() => {
-  const handleKey = (e) => {
-    if (e.key === "Escape") onReset();
-  };
-  window.addEventListener("keydown", handleKey);
-  return () => window.removeEventListener("keydown", handleKey);
-}, [onReset]);
-
+    const handleKey = (e) => {
+      if (e.key === "Escape") onReset();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onReset]);
 
   return (
     <div className="w-full h-full flex items-center justify-center px-6">
-      <div
-        className="
-          w-full max-w-3xl px-12 py-14 text-center
-          rounded-3xl
-          backdrop-blur-xl bg-white/10
-          border border-white/15
-          shadow-[0_20px_60px_rgba(0,0,0,0.35)]
-          animate-glass-in
-          relative
-        "
-      >
+      <div className="w-full max-w-3xl px-12 py-14 text-center rounded-3xl backdrop-blur-xl bg-white/10 border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.35)] animate-glass-in relative">
         {/* ICON */}
         <div className="text-[110px] mb-6 animate-breathe">{status.icon}</div>
 
         {/* TITLE */}
-        <h1 className="text-5xl font-extrabold tracking-wide mb-3">{title}</h1>
+        <h1 className="text-6xl md:text-7xl font-black tracking-wider leading-tight mb-4">
+          {title}
+        </h1>
 
         {/* DESC */}
-        <p className="text-lg opacity-75 mb-12">
+        <p className="text-base md:text-lg uppercase tracking-[0.25em] opacity-60 mb-12">
           {status.desc || "Izin keluar sebentar"}
         </p>
 
@@ -57,15 +48,7 @@ export default function StatusView({ status, customText, phone, onReset }) {
             Scan untuk WhatsApp
           </span>
 
-          <div
-            className="
-              p-4 rounded-2xl
-              bg-white/90
-              shadow-lg
-              hover:scale-105
-              transition
-            "
-          >
+          <div className="p-4 rounded-2xl bg-white/90 shadow-lg hover:scale-105 transition">
             <img
               src={qrUrl}
               alt="QR WhatsApp"
@@ -77,7 +60,7 @@ export default function StatusView({ status, customText, phone, onReset }) {
 
         {/* MARQUEE */}
         <div className="overflow-hidden text-sm opacity-50 mb-10">
-          <div className="inline-block animate-marquee-slow">
+          <div className="text-xs opacity-50 tracking-wide">
             Terima kasih 🙏 Jika urgent silakan hubungi WhatsApp
           </div>
         </div>
@@ -86,21 +69,12 @@ export default function StatusView({ status, customText, phone, onReset }) {
         <button
           onClick={onReset}
           aria-label="Ganti status"
-          className={`
-    fixed bottom-6 right-6 z-40
-    w-10 h-10 rounded-full
-    flex items-center justify-center
-    text-lg font-bold
-    backdrop-blur-xl
-    bg-white/20 border border-white/30
-    transition-all duration-300 ease-out
-    ${
-      showControls
-        ? "opacity-80 translate-y-0"
-        : "opacity-0 translate-y-2 pointer-events-none"
-    }
-    hover:opacity-100 hover:scale-110
-  `}
+          className={`fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold backdrop-blur-xl bg-white/20 border border-white/30 transition-all duration-300 ease-out 
+            ${
+              showControls
+                ? "opacity-80 translate-y-0"
+                : "opacity-0 translate-y-2 pointer-events-none"
+            } hover:opacity-100 hover:scale-110`}
         >
           ↩
         </button>

@@ -1,56 +1,77 @@
 import { useEffect, useState } from "react";
+
+/* Views */
 import SelectView from "./components/SelectView";
 import StatusView from "./components/StatusView";
+
+/* UI */
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import FullscreenButton from "./components/FullscreenButton";
+import Clock from "./components/Clock";
+
+/* Hooks */
 import { useTheme } from "./hooks/useTheme";
 import { useFullscreen } from "./hooks/useFullscreen";
 
 /*
-  App:
-  - Pusat state
-  - Kontrol view
-  - Kontrol fullscreen
+  App
+  - Mengontrol view (select / status)
+  - Menyimpan state status
+  - Mengatur theme & fullscreen
 */
 export default function App() {
-  // View control
-  const [view, setView] = useState("select");
+  /* =====================
+     VIEW STATE
+     ===================== */
+  const [view, setView] = useState("select"); // "select" | "status"
 
-  // Status data
+  /* =====================
+     STATUS STATE
+     ===================== */
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [customText, setCustomText] = useState("");
   const [phone, setPhone] = useState("");
 
-  // Theme
+  /* =====================
+     THEME
+     ===================== */
   const { theme, setTheme } = useTheme();
 
-  // Fullscreen
+  /* =====================
+     FULLSCREEN
+     ===================== */
   const { isFullscreen, enterFullscreen, exitFullscreen } = useFullscreen();
 
-  /*
-    Auto fullscreen saat masuk Status View
-  */
+  /* =====================
+     SIDE EFFECTS
+     ===================== */
+
+  // Auto fullscreen saat masuk Status View
   useEffect(() => {
     if (view === "status") {
       enterFullscreen();
     }
-  }, [enterFullscreen, view]);
+  }, [view, enterFullscreen]);
 
-  /*
-    Handler submit
-  */
+  /* =====================
+     HANDLERS
+     ===================== */
+
   const handleSubmit = () => {
-    if (!phone) return alert("Nomor WhatsApp wajib diisi");
-    if (selectedStatus.key === "custom" && !customText)
-      return alert("Custom status belum diisi");
+    if (!phone) {
+      alert("Nomor WhatsApp wajib diisi");
+      return;
+    }
+
+    if (selectedStatus?.key === "custom" && !customText) {
+      alert("Custom status belum diisi");
+      return;
+    }
 
     setView("status");
   };
 
-  /*
-    Reset semua state
-  */
-  const resetStatus = () => {
+  const handleReset = () => {
     setView("select");
     setSelectedStatus(null);
     setCustomText("");
@@ -58,12 +79,19 @@ export default function App() {
     exitFullscreen();
   };
 
+  /* =====================
+     RENDER
+     ===================== */
+
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center p-6">
+    <div className="min-h-screen w-screen flex items-center justify-center p-6 relative">
+      {/* CLOCK (ambient) */}
+      <Clock />
+
       {/* THEME SWITCHER */}
       <ThemeSwitcher theme={theme} setTheme={setTheme} />
 
-      {/* VIEW CONTROL */}
+      {/* VIEW: SELECT */}
       {view === "select" && (
         <SelectView
           selectedStatus={selectedStatus}
@@ -76,12 +104,13 @@ export default function App() {
         />
       )}
 
+      {/* VIEW: STATUS */}
       {view === "status" && selectedStatus && (
         <StatusView
           status={selectedStatus}
           customText={customText}
           phone={phone}
-          onReset={resetStatus}
+          onReset={handleReset}
         />
       )}
 

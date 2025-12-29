@@ -2,56 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== THEME GRADIENT ===== */
+/* =====================
+   BACKGROUND THEME
+   ===================== */
 
 body {
-  @apply transition-colors duration-500;
+  min-height: 100vh;
+  transition: background 0.6s ease;
 }
 
-/* Light */
+/* LIGHT */
 body[data-theme="light"] {
-  background: linear-gradient(135deg, #ffffff, #f1f5f9);
+  background:
+    radial-gradient(circle at top, #ffffff, transparent 60%),
+    linear-gradient(135deg, #f1f5f9, #e2e8f0);
   color: #0f172a;
 }
 
-/* Bright */
+/* BRIGHT */
 body[data-theme="bright"] {
-  background: linear-gradient(135deg, #fef9c3, #fde68a);
+  background:
+    radial-gradient(circle at top, #fef9c3, transparent 60%),
+    linear-gradient(135deg, #fde68a, #facc15);
   color: #78350f;
 }
 
-/* Cyber Punk */
+/* CYBER */
 body[data-theme="cyber"] {
-  background: linear-gradient(135deg, #020617, #0f172a, #020617);
-  color: #22d3ee;
+  background:
+    radial-gradient(circle at center, rgba(34, 211, 238, 0.12), transparent 60%),
+    linear-gradient(135deg, #020617, #0f172a, #020617);
+  color: #e0f2fe;
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(100%);
-  }
 
-  100% {
-    transform: translateX(-100%);
-  }
-}
+/* =====================
+   ANIMATION
+   ===================== */
 
-.animate-marquee {
-  animation: marquee 15s linear infinite;
-}
-
-@keyframes fadeIn {
+@keyframes glassIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: scale(0.96) translateY(20px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+.animate-glass-in {
+  animation: glassIn 0.6s ease-out;
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
 }

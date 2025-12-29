@@ -15,7 +15,7 @@ import { useTheme } from "./hooks/useTheme";
 import { useFullscreen } from "./hooks/useFullscreen";
 import { useAutoHideUI } from "./hooks/useAutoHideUI";
 
-
+/* simple enum biar ga typo */
 const VIEW = {
   SELECT: "select",
   STATUS: "status",
@@ -23,7 +23,7 @@ const VIEW = {
 
 export default function App() {
   /* =====================
-     VIEW STATE
+     VIEW
      ===================== */
   const [view, setView] = useState(VIEW.SELECT);
 
@@ -38,6 +38,8 @@ export default function App() {
      UI STATE
      ===================== */
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // auto hide control (mouse idle)
   useAutoHideUI();
 
   /* =====================
@@ -49,16 +51,27 @@ export default function App() {
   /* =====================
      EFFECTS
      ===================== */
+
+  // masuk fullscreen pas status tampil
   useEffect(() => {
     if (view === VIEW.STATUS) {
       enterFullscreen();
     }
   }, [view, enterFullscreen]);
 
+  // pastikan loading mati begitu view berubah ke status
+  useEffect(() => {
+    if (view === VIEW.STATUS) {
+      setIsSubmitting(false);
+    }
+  }, [view]);
+
   /* =====================
      HANDLERS
      ===================== */
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
+    // validasi basic
     if (!phone) {
       alert("Nomor WhatsApp wajib diisi");
       return;
@@ -69,13 +82,14 @@ export default function App() {
       return;
     }
 
+    // trigger loading
     setIsSubmitting(true);
 
-    // UX flow: loading → status
-    setTimeout(() => {
-      setView(VIEW.STATUS);
-      setIsSubmitting(false);
-    }, 1000);
+    // delay dikit biar ada feedback (UX)
+    await new Promise((r) => setTimeout(r, 300));
+
+    // pindah ke status
+    setView(VIEW.STATUS);
   };
 
   const handleReset = () => {
@@ -100,10 +114,10 @@ export default function App() {
       {/* THEME SWITCH */}
       <ThemeSwitcher theme={theme} setTheme={setTheme} />
 
-      {/* LOADING OVERLAY */}
+      {/* LOADING */}
       {isSubmitting && <LoadingOverlay />}
 
-      {/* VIEW: SELECT */}
+      {/* SELECT VIEW */}
       {view === VIEW.SELECT && (
         <SelectView
           selectedStatus={selectedStatus}
@@ -117,7 +131,7 @@ export default function App() {
         />
       )}
 
-      {/* VIEW: STATUS */}
+      {/* STATUS VIEW */}
       {view === VIEW.STATUS && selectedStatus && (
         <StatusView
           status={selectedStatus}
@@ -127,7 +141,7 @@ export default function App() {
         />
       )}
 
-      {/* FULLSCREEN CONTROL */}
+      {/* FULLSCREEN BUTTON */}
       <FullscreenButton
         isFullscreen={isFullscreen}
         enterFullscreen={enterFullscreen}

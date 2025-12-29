@@ -41,6 +41,13 @@ export default function StatusView({ status, customText, phone, onReset }) {
           </div>
         </div>
 
+        {/* MARQUEE */}
+        <div className="overflow-hidden whitespace-nowrap opacity-70 text-sm mb-6">
+          <div className="inline-block animate-marquee">
+            Terima kasih 🙏 Jika urgent silakan hubungi WhatsApp
+          </div>
+        </div>
+
         {/* RESET BUTTON */}
         <button
           onClick={onReset}

@@ -68,6 +68,8 @@ body.show-ui .control-bar {
   opacity: 0.6;
   -webkit-user-select: none;
   user-select: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
 }
 
 /* =====================

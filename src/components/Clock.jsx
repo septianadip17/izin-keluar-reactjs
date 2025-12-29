@@ -4,20 +4,40 @@ export default function Clock() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    const update = () =>
-      setTime(
-        new Date().toLocaleTimeString("id-ID", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
-        })
-      );
+    const updateTime = () => {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      const ss = String(now.getSeconds()).padStart(2, "0");
+      setTime(`${hh}:${mm}:${ss}`);
+    };
 
-    update();
-    const i = setInterval(update, 1000);
-    return () => clearInterval(i);
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
-  return <div className="clock glass">{time}</div>;
+  return (
+    <div className="control-bar fixed top-6 left-6 z-30 select-none">
+      <div
+        className="
+          px-4 py-2
+          rounded-full
+          backdrop-blur-xl
+          bg-white/10
+          border border-white/20
+          shadow-md
+          text-xs
+          tracking-[0.35em]
+          font-mono
+          opacity-50
+          hover:opacity-100
+          transition
+        "
+      >
+        {time}
+      </div>
+    </div>
+  );
 }

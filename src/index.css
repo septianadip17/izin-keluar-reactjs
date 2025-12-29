@@ -3,196 +3,90 @@
 @tailwind utilities;
 
 /* =====================
-   BASE & ROOT
+   BASE
    ===================== */
 
 html,
-body {
+body,
+#root {
   width: 100%;
   height: 100%;
 }
 
 body {
   min-height: 100vh;
-  transition: background 0.6s ease;
   overflow: hidden;
-  /* fullscreen display */
-}
-
-/* Root container React */
-#root {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
+  transition: background 0.6s ease;
 }
 
 /* =====================
-   NOISE OVERLAY (ANTI-BANDING)
+   NOISE OVERLAY
    ===================== */
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("/noise.png");
-  background-repeat: repeat;
+  background: url("/noise.png") repeat;
   opacity: 0.04;
   pointer-events: none;
   z-index: 0;
 }
 
 /* =====================
-   AUTO-HIDE UI CONTROLS
+   THEME VARIABLES
    ===================== */
 
-.control-bar {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 20;
-}
-
-body.show-ui .control-bar {
-  opacity: 1;
-}
-
-/* =====================
-   CLOCK (AMBIENT)
-   ===================== */
-
-.clock {
-  position: fixed;
-  top: 24px;
-  left: 32px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  opacity: 0.4;
-  transition: opacity 0.4s ease;
-  --webkit-backdrop-filter: blur(10px);
-  z-index: 30;
-}
-
-.clock:hover {
-  opacity: 1;
-}
-
-/* =====================
-   GLASS CARD
-   ===================== */
-
-.card {
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow:
-    0 0 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 0.5px rgba(255, 255, 255, 0.3);
-  border-radius: 24px;
-}
-
-/* Fallback jika backdrop-filter tidak didukung */
-@supports not (backdrop-filter: blur(10px)) {
-  .card {
-    background: rgba(30, 41, 59, 0.85);
-  }
-}
-
-/* =====================
-   QR CODE CONTAINER
-   ===================== */
-
-.qr-wrapper {
-  padding: 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-}
-
-/* =====================
-   STATUS ICON (AMBIENT GLOW)
-   ===================== */
-
-.status-icon {
-  animation: glow 3s ease-in-out infinite;
-}
-
-@keyframes glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(96, 165, 250, 0.4);
-  }
-
-  50% {
-    box-shadow: 0 0 40px rgba(96, 165, 250, 0.7);
-  }
-}
-
-/* =====================
-   THEME BUTTON
-   ===================== */
-
-.theme-btn {
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-.theme-btn:hover {
-  box-shadow: 0 0 20px var(--accent);
-  transform: scale(1.05);
-}
-
-/* =====================
-   THEMES
-   ===================== */
-
-/* LIGHT */
 body[data-theme="light"] {
   --accent: #2563eb;
+  color: #0f172a;
   background:
     radial-gradient(circle at top, #ffffff, transparent 60%),
     linear-gradient(135deg, #f1f5f9, #e2e8f0);
-  color: #0f172a;
 }
 
-/* BRIGHT */
 body[data-theme="bright"] {
   --accent: #facc15;
+  color: #78350f;
   background:
     radial-gradient(circle at top, #fef9c3, transparent 60%),
     linear-gradient(135deg, #fde68a, #facc15);
-  color: #78350f;
 }
 
-/* CYBER */
 body[data-theme="cyber"] {
   --accent: #22d3ee;
+  color: #e0f2fe;
   background:
     radial-gradient(circle at center, rgba(34, 211, 238, 0.12), transparent 60%),
     linear-gradient(135deg, #020617, #0f172a, #020617);
-  color: #e0f2fe;
 }
 
 /* =====================
    ANIMATIONS
    ===================== */
 
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(96, 165, 250, .4);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(96, 165, 250, .7);
+  }
+}
+
 @keyframes glassIn {
   from {
     opacity: 0;
-    transform: scale(0.96) translateY(20px);
+    transform: scale(.96) translateY(20px);
   }
 
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
-}
-
-.animate-glass-in {
-  animation: glassIn 0.6s ease-out;
 }
 
 @keyframes breathe {
@@ -207,8 +101,26 @@ body[data-theme="cyber"] {
   }
 }
 
-.animate-breathe {
-  animation: breathe 4s ease-in-out infinite;
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes bgMove {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(10%, 10%);
+  }
 }
 
 /* =====================
@@ -216,78 +128,8 @@ body[data-theme="cyber"] {
    ===================== */
 
 @media (prefers-reduced-motion: reduce) {
-
-  .animate-breathe,
-  .status-icon,
-  .animate-glass-in {
-    animation: none;
+  * {
+    animation: none !important;
+    transition: none !important;
   }
-}
-
-
-.animated-bg {
-  position: fixed;
-  inset: -50%;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.15), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15), transparent 40%);
-  animation: bgMove 20s linear infinite;
-  z-index: -2;
-}
-
-@keyframes bgMove {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(10%, 10%);
-  }
-
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(100%);
-  }
-
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 12s linear infinite;
-}
-
-/* =====================
-   FORM INPUT GLOBAL
-   ===================== */
-
-.glass-input {
-  background: rgba(255, 255, 255, 0.12);
-  --webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: inherit;
-}
-
-.glass-input::placeholder {
-  color: currentColor;
-  opacity: 0.55;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-
-/* CYBER: lebih terang */
-body[data-theme="cyber"] .glass-input {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* LIGHT & BRIGHT: teks lebih gelap */
-body[data-theme="light"] .glass-input,
-body[data-theme="bright"] .glass-input {
-  background: rgba(255, 255, 255, 0.6);
-  border-color: rgba(0, 0, 0, 0.15);
 }

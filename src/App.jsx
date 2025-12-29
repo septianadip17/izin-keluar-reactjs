@@ -142,11 +142,16 @@ export default function App() {
       )}
 
       {/* FULLSCREEN BUTTON */}
-      <FullscreenButton
-        isFullscreen={isFullscreen}
-        enterFullscreen={enterFullscreen}
-        exitFullscreen={exitFullscreen}
-      />
+      {view === VIEW.STATUS && (
+        <div className="group">
+          <FullscreenButton
+            visible
+            isFullscreen={isFullscreen}
+            enterFullscreen={enterFullscreen}
+            exitFullscreen={exitFullscreen}
+          />
+        </div>
+      )}
     </div>
   );
 }

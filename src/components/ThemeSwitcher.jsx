@@ -24,7 +24,7 @@ export default function ThemeSwitcher({ theme, setTheme }) {
                 ${
                   active
                     ? "ring-2 ring-[var(--accent)] scale-110 shadow-[0_0_12px_var(--accent)]"
-                    : "opacity-70 hover:opacity-100 hover:scale-110"
+                    : "opacity-60 hover:opacity-100 hover:scale-110"
                 }
               `}
             />

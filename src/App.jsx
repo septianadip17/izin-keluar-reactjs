@@ -14,14 +14,19 @@ import LoadingOverlay from "./components/LoadingOverlay";
 import { useTheme } from "./hooks/useTheme";
 import { useFullscreen } from "./hooks/useFullscreen";
 
+const VIEW = {
+  SELECT: "select",
+  STATUS: "status",
+};
+
 export default function App() {
   /* =====================
      VIEW STATE
      ===================== */
-  const [view, setView] = useState("select");
+  const [view, setView] = useState(VIEW.SELECT);
 
   /* =====================
-     STATUS STATE
+     STATUS DATA
      ===================== */
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [customText, setCustomText] = useState("");
@@ -42,30 +47,36 @@ export default function App() {
      EFFECTS
      ===================== */
   useEffect(() => {
-    if (view === "status") enterFullscreen();
+    if (view === VIEW.STATUS) {
+      enterFullscreen();
+    }
   }, [view, enterFullscreen]);
 
   /* =====================
      HANDLERS
      ===================== */
   const handleSubmit = () => {
-    if (!phone) return alert("Nomor WhatsApp wajib diisi");
-    if (selectedStatus?.key === "custom" && !customText)
-      return alert("Custom status belum diisi");
-    // button feedback
+    if (!phone) {
+      alert("Nomor WhatsApp wajib diisi");
+      return;
+    }
+
+    if (selectedStatus?.key === "custom" && !customText) {
+      alert("Custom status belum diisi");
+      return;
+    }
+
     setIsSubmitting(true);
-    // delay kecil
+
+    // UX flow: loading → status
     setTimeout(() => {
-      setView("status");
-    }, 500);
-    // loading overlay
-    setTimeout(() => {
+      setView(VIEW.STATUS);
       setIsSubmitting(false);
-    }, 1200);
+    }, 1000);
   };
 
   const handleReset = () => {
-    setView("select");
+    setView(VIEW.SELECT);
     setSelectedStatus(null);
     setCustomText("");
     setPhone("");
@@ -76,21 +87,21 @@ export default function App() {
      RENDER
      ===================== */
   return (
-    <div className="min-h-screen w-screen relative overflow-hidden flex items-center justify-center p-6">
-      {/* BACKGROUND ANIMATION */}
+    <div className="relative min-h-screen w-screen overflow-hidden flex items-center justify-center p-6">
+      {/* BACKGROUND */}
       <div className="animated-bg" />
 
       {/* CLOCK */}
       <Clock />
 
-      {/* THEME */}
+      {/* THEME SWITCH */}
       <ThemeSwitcher theme={theme} setTheme={setTheme} />
 
-      {/* LOADING */}
+      {/* LOADING OVERLAY */}
       {isSubmitting && <LoadingOverlay />}
 
-      {/* VIEW */}
-      {view === "select" && (
+      {/* VIEW: SELECT */}
+      {view === VIEW.SELECT && (
         <SelectView
           selectedStatus={selectedStatus}
           onSelectStatus={setSelectedStatus}
@@ -99,10 +110,12 @@ export default function App() {
           phone={phone}
           setPhone={setPhone}
           onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
         />
       )}
 
-      {view === "status" && selectedStatus && (
+      {/* VIEW: STATUS */}
+      {view === VIEW.STATUS && selectedStatus && (
         <StatusView
           status={selectedStatus}
           customText={customText}
@@ -111,7 +124,7 @@ export default function App() {
         />
       )}
 
-      {/* FULLSCREEN */}
+      {/* FULLSCREEN CONTROL */}
       <FullscreenButton
         isFullscreen={isFullscreen}
         enterFullscreen={enterFullscreen}

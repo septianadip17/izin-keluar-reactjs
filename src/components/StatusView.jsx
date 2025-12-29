@@ -9,11 +9,18 @@ export default function StatusView({ status, customText, phone, onReset }) {
   )}`;
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      {/* MAIN GLASS CARD */}
-      <div className="card w-full max-w-3xl p-12 text-center animate-glass-in">
-        {/* STATUS ICON */}
-        <div className="status-icon text-[120px] mb-6 animate-breathe">
+    <div className="w-full h-full flex items-center justify-center px-6">
+      {/* GLASS CARD */}
+      <div
+        className="
+        w-full max-w-3xl p-12 text-center rounded-3xl
+        backdrop-blur-xl bg-white/10 border border-white/20
+        shadow-[0_0_40px_rgba(0,0,0,0.4)]
+        animate-glass-in
+      "
+      >
+        {/* ICON */}
+        <div className="text-[120px] mb-6 animate-breathe drop-shadow-lg">
           {status.icon}
         </div>
 
@@ -22,16 +29,22 @@ export default function StatusView({ status, customText, phone, onReset }) {
 
         {/* DESCRIPTION */}
         <p className="text-lg opacity-80 mb-10">
-          {status.desc || "izin keluar sebentar"}
+          {status.desc || "Izin keluar sebentar"}
         </p>
 
-        {/* QR SECTION */}
+        {/* QR */}
         <div className="flex flex-col items-center gap-4 mb-10">
           <p className="text-xs uppercase tracking-widest opacity-70">
             Scan untuk WhatsApp
           </p>
 
-          <div className="qr-wrapper hover:scale-105 transition-transform">
+          <div
+            className="
+            p-4 rounded-2xl bg-white
+            shadow-xl
+            hover:scale-105 transition-transform
+          "
+          >
             <img
               src={qrUrl}
               alt="QR WhatsApp"
@@ -42,21 +55,21 @@ export default function StatusView({ status, customText, phone, onReset }) {
         </div>
 
         {/* MARQUEE */}
-        <div className="overflow-hidden whitespace-nowrap opacity-70 text-sm mb-6">
+        <div className="overflow-hidden whitespace-nowrap opacity-70 text-sm mb-8">
           <div className="inline-block animate-marquee">
             Terima kasih 🙏 Jika urgent silakan hubungi WhatsApp
           </div>
         </div>
 
-        {/* RESET BUTTON */}
+        {/* RESET */}
         <button
           onClick={onReset}
           className="
-            px-10 py-3
-            rounded-full
-            border border-white/40
+            px-10 py-3 rounded-full font-semibold
+            border border-white/30
             backdrop-blur
-            hover:bg-white/20
+            hover:bg-[var(--accent)]
+            hover:text-black
             transition
           "
         >
